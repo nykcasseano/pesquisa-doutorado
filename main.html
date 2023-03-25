@@ -105,7 +105,6 @@
                 <option value="1970">1970</option>
                 <option value="1969">1969</option>
                 <option value="1968">1968</option>
-
                 <label for="naoConcluiu">Marque se ainda não concluiu o curso:</label>
                 <input type="checkbox" id="naoConcluiu" name="naoConcluiu"><br><br>
 
@@ -167,6 +166,54 @@
 
         <script>
             const form = document.getElementById("myForm");
+
             form.addEventListener("submit", (event) => {
                 event.preventDefault();
-                const data = 
+                const data = new FormData(form);
+
+                // Here you can do any processing of the form data before submitting it
+                // to the server. For example, you could validate the form fields or
+                // manipulate the data in some way.
+
+                // Submit the form data to the server using an HTTP request
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "/submit-form"); // Replace this with the URL of your server-side script
+                xhr.send(data);
+
+                // Redirect to the next page
+                window.location.href = "/next-page.html"; // Replace this with the URL of the next page
+
+            });
+
+            // add an event listener to the "Next Page" button
+            document.getElementById("next-page-button").addEventListener("click", function (event) {
+                // prevent the default form submission behavior
+                event.preventDefault();
+
+                // collect the data from the input fields
+                var form = document.getElementById("my-form");
+                var formData = new FormData(form);
+
+                // send the form data to the server using an HTTP POST request
+                fetch("/submit-form-data", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(function (response) {
+                        // if the form data is successfully submitted, redirect the user to the next page
+                        window.location.href = "/next-page.html";
+                    })
+                    .catch(function (error) {
+                        // if there is an error submitting the form data, display an error message
+                        console.log(error);
+                        alert("There was an error submitting the form data. Please try again.");
+                    });
+            });
+
+        </script>
+</body>
+
+</html>
+
+replace the "/submit-form" and "/next-page.html" URLs with the actual URLs of your server-side
+script and next page, respectively.
